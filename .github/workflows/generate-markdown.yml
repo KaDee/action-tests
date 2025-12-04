@@ -1,0 +1,64 @@
+name: Generate CPP README markdown files
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'generate-md.py'
+      - 'CPP-*/cpp-*.xml'
+
+permissions:
+  contents: write
+
+jobs:
+  generate-and-commit:
+    name: Run generate-md.py and commit README updates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run generate-md.py scripts
+        shell: bash
+        run: python generate-md.py
+
+      - name: Commit README updates in CPP-* directories
+        if: always()
+        shell: bash
+        env:
+          GIT_AUTHOR_NAME: "github-actions[bot]"
+          GIT_AUTHOR_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+        run: |
+          set -euo pipefail
+          git config user.name "$GIT_AUTHOR_NAME"
+          git config user.email "$GIT_AUTHOR_EMAIL"
+
+          # Collect changed (modified/added) files in the working tree
+          # and stage only README.md files that live directly inside CPP-* directories.
+          # This covers newly created and modified README.md files.
+          # (pattern: CPP-XYZ/README.md)
+          modified=$(git diff --name-only --diff-filter=AM HEAD || true)
+          echo "Changed since HEAD: $modified"
+
+          echo "$modified" | tr ' ' '\n' | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f
+
+          # Also add untracked README.md files under CPP-* directories
+          git ls-files --others --exclude-standard | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f
+
+          if git diff --cached --quiet; then
+            echo "No README.md updates to commit"
+          else
+            git commit -m "Updated markdown CPP descriptions"
+            # Push back to the branch that triggered the workflow
+            BRANCH="${GITHUB_REF#refs/heads/}"
+            git push origin "HEAD:${BRANCH}"
+          fi
