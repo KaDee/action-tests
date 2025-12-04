@@ -42,24 +42,28 @@ jobs:
           git config user.name "$GIT_AUTHOR_NAME"
           git config user.email "$GIT_AUTHOR_EMAIL"
 
-          # Collect changed (modified/added) files in the working tree
-          # and stage only README.md files that live directly inside CPP-* directories.
-          # This covers newly created and modified README.md files.
-          # (pattern: CPP-XYZ/README.md)
-          git status
-          modified=$(git diff --name-only --diff-filter=AM HEAD || true)
-          echo "Changed since HEAD: $modified"
+          staged=false
 
-          echo "$modified" | tr ' ' '\n' | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f | true
+          # Stage modified or added README files
+          # 1) staged/modified relative to HEAD
+          while IFS= read -r -d '' f; do
+            git add -f "$f"
+            staged=true
+          done < <(git diff --name-only --diff-filter=AM HEAD -z | grep -z -E '^CPP-[^/]+/README\.md$' || true)
 
-          # Also add untracked README.md files under CPP-* directories
-          git ls-files --others --exclude-standard | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f | true
+          # 2) untracked README files that match the pattern
+          while IFS= read -r -d '' f; do
+            git add -f "$f"
+            staged=true
+          done < <(git ls-files --others --exclude-standard -z | grep -z -E '^CPP-[^/]+/README\.md$' || true)
 
-          if git diff --cached --quiet; then
-            echo "No README.md updates to commit"
-          else
-            git commit -m "Updated markdown CPP descriptions"
-            # Push back to the branch that triggered the workflow
-            BRANCH="${GITHUB_REF#refs/heads/}"
-            git push origin "HEAD:${BRANCH}"
+          if [ "$staged" = false ]; then
+            echo "No README.md updates to commit."
+            exit 0
           fi
+
+          git commit -m "Updated markdown CPP descriptions"
+          
+          # Push back to the branch that triggered the workflow
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          git push origin "HEAD:${BRANCH}"
