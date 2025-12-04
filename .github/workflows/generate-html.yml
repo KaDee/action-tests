@@ -2,6 +2,8 @@ name: Generate CPP HTML descriptions
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'cpp2html.xsl'
       - 'CPP-*/cpp-*.xml'
