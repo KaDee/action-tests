@@ -49,10 +49,10 @@ jobs:
           modified=$(git diff --name-only --diff-filter=AM HEAD || true)
           echo "Changed since HEAD: $modified"
 
-          echo "$modified" | tr ' ' '\n' | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f
+          echo "$modified" | tr ' ' '\n' | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f | true
 
           # Also add untracked README.md files under CPP-* directories
-          git ls-files --others --exclude-standard | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f
+          git ls-files --others --exclude-standard | grep -E '^CPP-[^/]+/README.md$' | xargs -r git add -f | true
 
           if git diff --cached --quiet; then
             echo "No README.md updates to commit"
