@@ -7,6 +7,12 @@ on:
     paths:
       - 'cpp2html.xsl'
       - 'CPP-*/cpp-*.xml'
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'cpp2html.xsl'
+      - 'CPP-*/cpp-*.xml'
 
 permissions:
   contents: write
