@@ -46,6 +46,7 @@ jobs:
           # and stage only README.md files that live directly inside CPP-* directories.
           # This covers newly created and modified README.md files.
           # (pattern: CPP-XYZ/README.md)
+          git status
           modified=$(git diff --name-only --diff-filter=AM HEAD || true)
           echo "Changed since HEAD: $modified"
 
