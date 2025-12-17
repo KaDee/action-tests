@@ -28,6 +28,8 @@ jobs:
           sudo apt-get install -y xsltproc
 
       - name: Run XSLT transformation for each CPP-*/cpp-*.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
