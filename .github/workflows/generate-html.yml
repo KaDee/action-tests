@@ -13,14 +13,22 @@ permissions:
 
 jobs:
   transform-and-commit:
+    if: github.actor != "github-actions[bot]"
     name: Transform cpp-*.xml to HTML and commit
     runs-on: ubuntu-latest
 
     steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.KADEE_ACTION_BOT_APP_ID }}
+          private-key: ${{ secrets.KADEE_ACTION_BOT_PRIVATE_KEY }}
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Install xsltproc (libxslt)
         run: |
@@ -63,7 +71,6 @@ jobs:
         env:
           GIT_AUTHOR_NAME: "github-actions[bot]"
           GIT_AUTHOR_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
