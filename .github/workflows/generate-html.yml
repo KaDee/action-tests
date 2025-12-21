@@ -18,12 +18,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug token
+        shell: bash
+        run: |
+          echo ${{ secrets.KADEE_ACTION_BOT_PRIVATE_KEY }}
+          
       - name: Create GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ vars.KADEE_ACTION_BOT_APP_ID }}
-          private-key: ${{ secrets.KADEE_ACTION_BOT_PRIMARY_KEY }}
+          private-key: ${{ secrets.KADEE_ACTION_BOT_PRIVATE_KEY }}
           
       - name: Checkout repository
         uses: actions/checkout@v4
