@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   generate-and-commit:
-    if: github.actor != "github-actions[bot]"
+    if: github.actor != 'github-actions[bot]'
     name: Run generate-md.py and commit README updates
     runs-on: ubuntu-latest
 
