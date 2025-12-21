@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   transform-and-commit:
-    if: github.actor != "github-actions[bot]"
+    if: github.actor != 'github-actions[bot]'
     name: Transform cpp-*.xml to HTML and commit
     runs-on: ubuntu-latest
 
