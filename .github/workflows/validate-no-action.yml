@@ -9,7 +9,7 @@ on:
             - 'cpp.xsd'
 
 jobs:
-    validate:
+    validate-xml:
         runs-on: ubuntu-latest
         steps:
             - name: Nothing to do
