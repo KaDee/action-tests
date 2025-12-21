@@ -73,6 +73,8 @@ jobs:
 
           git commit -m "Updated markdown CPP descriptions"
           
+          git pull --ff-only
+          
           # Push back to the branch that triggered the workflow
           BRANCH="${GITHUB_REF#refs/heads/}"
           git push origin "HEAD:${BRANCH}"
