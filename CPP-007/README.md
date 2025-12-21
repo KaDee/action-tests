@@ -1,4 +1,4 @@
-# Virus Scanning New Version
+# Virus Scanning Final Version
 
 **Short Definition:** Information packages are virus checked, with appropriate facilities for quarantine.
 
