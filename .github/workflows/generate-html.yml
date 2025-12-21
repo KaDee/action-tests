@@ -100,7 +100,7 @@ jobs:
 
           git commit -m "Updated CPP HTML descriptions"
 
-          git pull --ff-only
+          git pull --no-ff
           
           # Push back to the branch that triggered the workflow
           BRANCH="${GITHUB_REF#refs/heads/}"
