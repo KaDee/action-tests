@@ -1,4 +1,4 @@
-# Virus Scanning Superlative
+# Virus Scanning New Version
 
 **Short Definition:** Information packages are virus checked, with appropriate facilities for quarantine.
 
