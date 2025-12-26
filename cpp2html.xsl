@@ -804,7 +804,7 @@
         <table class="publicDocumentation">
             <tr>
                 <th style="width:20%">Institution</th>
-                <th style="width:20%">Organisation type</th>
+                <th style="width:20%">Organisation Type</th>
                 <th style="width:10%">Language</th>
                 <th style="width:50%">Hyperlink</th>
             </tr>
