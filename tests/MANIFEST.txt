@@ -1,0 +1,60 @@
+Test Suite Manifest
+===================
+
+This directory contains a comprehensive test suite for cpp2html.xsl XSLT transformation.
+
+Files Created:
+--------------
+
+1. test_cpp2html_xsl.py (634 lines)
+   - Main test suite for XSL validation
+   - 19 comprehensive tests
+   - Validates structure, templates, and transformation logic
+   - Primary test: Organisation Type capitalization
+
+2. test_html_output_validation.py (394 lines)
+   - HTML output quality validation
+   - 10 comprehensive tests
+   - Validates structure, accessibility, and formatting
+
+3. run_all_tests.sh (51 lines)
+   - Executable test runner script
+   - Runs both test suites
+   - Provides summary report
+
+4. README.md (87 lines)
+   - Complete test suite documentation
+   - Usage instructions
+   - Test details and examples
+   - CI/CD integration guide
+
+5. TEST_RESULTS.md
+   - Latest test execution results
+   - Coverage analysis
+   - Test metrics
+
+6. INDEX.md
+   - Quick reference guide
+   - Links to all documentation
+   - Test summary table
+
+7. MANIFEST.txt (this file)
+   - Complete file listing
+   - Brief descriptions
+
+Repository Root Files:
+---------------------
+
+8. TESTING_SUMMARY.md
+   - High-level overview
+   - Complete test philosophy
+   - Integration guide
+
+Test Statistics:
+---------------
+Total Tests: 29
+Test Code Lines: 1,028
+Documentation Lines: 200+
+Primary Focus: Organisation Type capitalization validation
+
+Status: ✅ All files created and validated
